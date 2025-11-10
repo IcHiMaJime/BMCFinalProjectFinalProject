@@ -1,8 +1,6 @@
-// lib/widgets/order_card.dart
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart'; // Import the intl package
+import 'package:intl/intl.dart';
 
 class OrderCard extends StatelessWidget {
   final Map<String, dynamic> orderData;
@@ -34,7 +32,7 @@ class OrderCard extends StatelessWidget {
       child: ExpansionTile(
         tilePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         title: Text(
-          'Order ID: ${orderId.substring(0, 8)}...', // Display first 8 chars of ID
+          'Order ID: ${orderId.substring(0, 8)}...',
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         ),
         subtitle: Column(
@@ -73,7 +71,6 @@ class OrderCard extends StatelessWidget {
           ],
         ),
 
-        // Ito ang lalabas kapag na-expand ang tile
         children: items.map<Widget>((item) {
           // Tiyakin na ang price ay double
           final itemPrice = (item['price'] as num).toDouble();

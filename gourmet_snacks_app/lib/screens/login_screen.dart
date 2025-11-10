@@ -1,8 +1,6 @@
-// lib/screens/login_screen.dart
-
 import 'package:gourmet_snacks_app/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart'; // Import para sa RichText
+import 'package:flutter/gestures.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gourmet_snacks_app/screens/auth_wrapper.dart';
 
@@ -22,12 +20,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool _isPasswordVisible = false;
 
-  // Colors mula sa iyong UI image
   static const Color primaryBlue = Color.fromARGB(255, 47, 137, 214);
   static const Color darkerBlue = Color.fromARGB(255, 30, 80, 130);
-  static const Color lightAccentBlue = Color(0xFFB3E5FC); // Para sa link at subtitle
+  static const Color lightAccentBlue = Color(0xFFB3E5FC);
 
-  // Custom Input Decoration para sa clean look ng UI
+
   InputDecoration _customInputDecoration({required String label, required IconData icon, Widget? suffix}) {
     return InputDecoration(
       labelText: label,
@@ -56,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  // Login Logic (Kinuha sa huling fix)
+  // Login Logic
   Future<void> _login() async {
     if (!_formKey.currentState!.validate()) {
       return;
@@ -111,11 +108,10 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  // --- FINAL UI MATCH BUILD METHOD (UPDATED) ---
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack( // *GINAMIT ANG STACK PARA SA FULL-SCREEN BACKGROUND*
+      body: Stack(
         children: [
           // 1. Full-Screen Gradient Background
           SizedBox.expand(
@@ -125,8 +121,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    primaryBlue, // Magsisimula sa primaryBlue
-                    darkerBlue,  // Magtatapos sa darkerBlue
+                    primaryBlue,
+                    darkerBlue,
                   ],
                 ),
               ),

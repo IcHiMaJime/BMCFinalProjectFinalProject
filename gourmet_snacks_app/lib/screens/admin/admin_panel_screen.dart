@@ -1,5 +1,3 @@
-// admin_panel_screen.dart
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gourmet_snacks_app/screens/admin/admin_order_screen.dart';
@@ -21,14 +19,11 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
   final _imageUrlController = TextEditingController();
   bool _isLoading = false;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final Color lightBluePrimary = Colors.lightBlue.shade300;
+  final Color kUniqueNavyText = const Color(0xFF1A237E);
 
-  // --- UNIQUE LIGHT BLUE PALETTE ---
-  final Color lightBluePrimary = Colors.lightBlue.shade300; // Light Blue Accent
-  final Color kUniqueNavyText = const Color(0xFF1A237E); // Deep Navy Blue for text
-  // ---------------------------------
-
-  // --- NEW: Category State ---
-  String? _selectedCategory = 'Snacks'; // Default category
+  // Category State
+  String? _selectedCategory = 'Snacks';
 
   @override
   void dispose() {
@@ -66,7 +61,7 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
         'description': _descriptionController.text.trim(),
         'price': double.parse(_priceController.text.trim()),
         'imageUrl': imageUrl,
-        'category': _selectedCategory, // NEW: Save the selected category
+        'category': _selectedCategory,
       });
 
       // Show success message
@@ -171,7 +166,7 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
                 ),
                 const SizedBox(height: 16),
 
-                // NEW: Category Dropdown
+                // Category Dropdown
                 DropdownButtonFormField<String>(
                   value: _selectedCategory,
                   decoration: InputDecoration(

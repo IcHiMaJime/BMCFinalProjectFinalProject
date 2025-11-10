@@ -6,7 +6,6 @@ import 'package:gourmet_snacks_app/providers/cart_provider.dart';
 import 'package:gourmet_snacks_app/screens/order_success_screen.dart';
 import 'package:google_fonts/google_fonts.dart'; // Import Google Fonts for consistency
 
-// 1. An enum to represent our different payment methods
 enum PaymentMethod { card, gcash, bank }
 
 class PaymentScreen extends StatefulWidget {
@@ -14,7 +13,7 @@ class PaymentScreen extends StatefulWidget {
 
   const PaymentScreen({
     super.key,
-    required this.totalAmount, // Dito ipinapasa ang total price from CartScreen
+    required this.totalAmount,
   });
 
   @override
@@ -26,10 +25,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
   PaymentMethod? _selectedMethod = PaymentMethod.card;
   bool _isLoading = false;
 
-  // --- UNIQUE BLUE PALETTE ---
-  final Color bluePrimary = Colors.blue.shade700; // #1976D2
-  final Color kUniqueNavyText = const Color(0xFF1A237E); // Deep Navy Blue
-  // ---------------------------
+
+  final Color bluePrimary = Colors.blue.shade700;
+  final Color kUniqueNavyText = const Color(0xFF1A237E);
 
   // 3. Mock Payment Logic: Simulate a 3-second API call
   Future<void> _processPayment(BuildContext context) async {
@@ -53,7 +51,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
           MaterialPageRoute(
             builder: (context) => const OrderSuccessScreen(),
           ),
-              (Route<dynamic> route) => false, // Clears the entire stack
+              (Route<dynamic> route) => false,
         );
       }
     } catch (error) {
@@ -79,7 +77,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
   Widget _buildPaymentTile(
       String title, PaymentMethod method, IconData icon) {
     return RadioListTile<PaymentMethod>(
-      // Gumamit ng Navy Blue para sa teksto
       title: Text(
           title,
           style: GoogleFonts.lato(
@@ -87,7 +84,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             color: kUniqueNavyText,
           )
       ),
-      secondary: Icon(icon, color: bluePrimary), // Gumamit ng Blue Primary para sa icon
+      secondary: Icon(icon, color: bluePrimary),
       value: method,
       groupValue: _selectedMethod,
       onChanged: (PaymentMethod? value) {
@@ -95,7 +92,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
           _selectedMethod = value;
         });
       },
-      activeColor: bluePrimary, // Gumamit ng Blue Primary para sa active radio button
+      activeColor: bluePrimary,
     );
   }
 
@@ -104,7 +101,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Checkout', style: GoogleFonts.lato(color: Colors.white, fontWeight: FontWeight.bold)),
-        backgroundColor: bluePrimary, // Blue Primary AppBar
+        backgroundColor: bluePrimary,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Padding(
@@ -112,7 +109,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            // --- Total Amount Display ---
             Card(
               elevation: 4,
               margin: const EdgeInsets.only(bottom: 20),
@@ -126,7 +122,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         style: GoogleFonts.lato(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
-                          color: kUniqueNavyText, // Navy Blue text
+                          color: kUniqueNavyText,
                         )
                     ),
                     Text(
@@ -134,7 +130,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       style: GoogleFonts.lato(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
-                          color: bluePrimary // Blue Primary price
+                          color: bluePrimary
                       ),
                     ),
                   ],
@@ -147,12 +143,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
               style: GoogleFonts.lato(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: kUniqueNavyText, // Navy Blue text
+                color: kUniqueNavyText,
               ),
             ),
             const SizedBox(height: 10),
 
-            // --- Payment Options ---
+            // Payment Options
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
@@ -172,7 +168,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       PaymentMethod.bank,
                       Icons.account_balance,
                     ),
-                    // Add more mock payment methods here if needed...
                   ],
                 ),
               ),
@@ -186,7 +181,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         padding: const EdgeInsets.all(16.0),
         child: ElevatedButton(
           onPressed: (_isLoading || _selectedMethod == null)
-              ? null // Disable button if loading or no method is selected
+              ? null
               : () => _processPayment(context),
           style: ElevatedButton.styleFrom(
             backgroundColor: bluePrimary, // Blue Primary button

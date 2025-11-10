@@ -1,5 +1,3 @@
-// lib/main.dart
-
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -8,10 +6,10 @@ import 'package:gourmet_snacks_app/providers/cart_provider.dart';
 import 'firebase_options.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-// --- UPDATED BLUE COLOR PALETTE ---
-const Color kBlue = Color(0xFF2196F3); // Standard Blue (Primary)
-const Color kLightBlue = Color(0xFF64B5F6); // Lighter accent blue (Secondary)
-const Color kLightBackground = Color(0xFFE3F2FD); // Very light blue background
+
+const Color kBlue = Color(0xFF2196F3);
+const Color kLightBlue = Color(0xFF64B5F6);
+const Color kLightBackground = Color(0xFFE3F2FD);
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,14 +43,13 @@ class MyApp extends StatelessWidget {
 
         // Global color scheme
         colorScheme: ColorScheme.light(
-          primary: kBlue, // Main color for buttons, etc.
-          secondary: kLightBlue, // Accent color
-          background: kLightBackground, // Soft light blue background color
-          surface: Colors.white, // Card and sheet backgrounds
+          primary: kBlue,
+          secondary: kLightBlue,
+          background: kLightBackground,
+          surface: Colors.white,
         ),
         useMaterial3: true,
 
-        // --- Custom Global Widget Styles ---
 
         // AppBar Theme
         appBarTheme: const AppBarTheme(
@@ -89,7 +86,6 @@ class MyApp extends StatelessWidget {
           labelStyle: GoogleFonts.lato(color: Colors.grey[600]),
         ),
 
-        // Inalis ang CardTheme upang maiwasan ang type error sa iyong SDK.
       ),
       home: const AuthWrapper(),
     );

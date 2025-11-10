@@ -1,10 +1,7 @@
-// lib/screens/product_detail_screen.dart
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:gourmet_snacks_app/providers/cart_provider.dart';
 
-// 1. CONVERTED TO STATEFULWIDGET
 class ProductDetailScreen extends StatefulWidget {
   final Map<String, dynamic> productData;
   final String productId;
@@ -20,20 +17,18 @@ class ProductDetailScreen extends StatefulWidget {
 }
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
-  // 2. STATE VARIABLE: Quantity for the selector
   int _quantity = 1;
   final Color primaryColor = const Color.fromARGB(255, 47, 137, 214);
 
-  // 3. HELPER FUNCTION: Increase quantity
+
   void _incrementQuantity() {
     setState(() {
       _quantity++;
     });
   }
 
-  // 4. HELPER FUNCTION: Decrease quantity
   void _decrementQuantity() {
-    if (_quantity > 1) { // Siguraduhin na hindi bababa sa 1
+    if (_quantity > 1) {
       setState(() {
         _quantity--;
       });
@@ -42,7 +37,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // 5. Access widget data using 'widget.'
     final String name = widget.productData['name'];
     final String description = widget.productData['description'];
     final String imageUrl = widget.productData['imageUrl'];
@@ -62,7 +56,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            // --- Large Image ---
             Image.network(
               imageUrl,
               height: 250,
@@ -75,7 +68,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // --- Name, Price, Divider, Description (Same as before) ---
                   Text(
                     name,
                     style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
@@ -103,7 +95,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                   const SizedBox(height: 40),
 
-                  // 6. --- QUANTITY SELECTOR UI ---
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -132,11 +123,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   const SizedBox(height: 20),
                   // --- END QUANTITY SELECTOR ---
 
-
-                  // 7. --- UPDATED ADD TO CART BUTTON ---
                   ElevatedButton.icon(
                     onPressed: () {
-                      // UPDATED: I-pass ang selected _quantity
+                      // I-pass ang selected _quantity
                       cart.addItem(widget.productId, name, price, _quantity);
 
                       ScaffoldMessenger.of(context).showSnackBar(

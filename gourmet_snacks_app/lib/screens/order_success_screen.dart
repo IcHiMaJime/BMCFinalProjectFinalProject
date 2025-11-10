@@ -1,7 +1,4 @@
-// lib/screens/order_success_screen.dart
-
 import 'package:flutter/material.dart';
-// Siguraduhin na tama ang import path para sa iyong home_screen.dart
 import 'package:gourmet_snacks_app/screens/home_screen.dart';
 
 class OrderSuccessScreen extends StatelessWidget {

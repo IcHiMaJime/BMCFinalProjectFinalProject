@@ -1,5 +1,3 @@
-// lib/screens/cart_screen.dart
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:gourmet_snacks_app/providers/cart_provider.dart';
@@ -10,7 +8,6 @@ import 'package:google_fonts/google_fonts.dart';
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
 
-  // Helper function to build the price rows
   Widget _buildPriceRow(String label, double amount, Color color, {bool isTotal = false}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -40,9 +37,8 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Unique Blue Palette
-    final Color bluePrimary = Colors.blue.shade700; // #1976D2
-    const Color kUniqueNavyText = Color(0xFF1A237E); // Deep Navy Blue
+    final Color bluePrimary = Colors.blue.shade700;
+    const Color kUniqueNavyText = Color(0xFF1A237E);
 
     return Scaffold(
       appBar: AppBar(
@@ -50,11 +46,8 @@ class CartScreen extends StatelessWidget {
       ),
       body: Consumer<CartProvider>(
         builder: (context, cart, child) {
-          // --- FIX 1: cart.items now returns List directly ---
           final cartItems = cart.items;
-          // --- FIX 2: totalPrice is now subtotal ---
           final subtotal = cart.subtotal;
-          // --- FIX 3: vatAmount is now vat ---
           final vatAmount = cart.vat;
           final totalWithVat = cart.totalPriceWithVat;
 
@@ -81,7 +74,7 @@ class CartScreen extends StatelessWidget {
 
           return Column(
             children: <Widget>[
-              // --- Checkout Summary and Button ---
+              // Checkout Summary and Button
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Card(
@@ -90,14 +83,14 @@ class CartScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        // Price Summary Rows (using Navy Blue for labels)
+
                         _buildPriceRow('Subtotal', subtotal, kUniqueNavyText),
                         _buildPriceRow('VAT (12%)', vatAmount, kUniqueNavyText),
                         const Divider(height: 20, thickness: 1.5),
                         _buildPriceRow(
                           'Order Total',
                           totalWithVat,
-                          bluePrimary, // Using Blue Primary for total
+                          bluePrimary,
                           isTotal: true,
                         ),
                         const SizedBox(height: 20),
@@ -114,10 +107,9 @@ class CartScreen extends StatelessWidget {
                               ),
                             );
                           },
-                          // Blue Button Styling
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: bluePrimary, // Blue background
-                            foregroundColor: Colors.white, // White text
+                            backgroundColor: bluePrimary,
+                            foregroundColor: Colors.white,
                             padding: const EdgeInsets.symmetric(vertical: 12),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
@@ -134,7 +126,7 @@ class CartScreen extends StatelessWidget {
                 ),
               ),
 
-              // --- List of Cart Items ---
+              // List of Cart Items
               Expanded(
                 child: ListView.builder(
                   itemCount: cartItems.length,

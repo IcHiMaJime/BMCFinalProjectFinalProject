@@ -1,5 +1,3 @@
-// admin_order_screen.dart
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
@@ -14,11 +12,8 @@ class AdminOrderScreen extends StatefulWidget {
 
 class _AdminOrderScreenState extends State<AdminOrderScreen> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-  // --- UNIQUE LIGHT BLUE PALETTE ---
-  final Color _screenColor = Colors.lightBlue.shade300; // Light Blue Accent: 0xFF4FC3F7
-  final Color kUniqueNavyText = const Color(0xFF1A237E); // Deep Navy Blue for text
-  // ---------------------------------
+  final Color _screenColor = Colors.lightBlue.shade300;
+  final Color kUniqueNavyText = const Color(0xFF1A237E);
 
   Stream<QuerySnapshot> _fetchOrders() {
     return _firestore
@@ -30,12 +25,12 @@ class _AdminOrderScreenState extends State<AdminOrderScreen> {
   Future<void> _updateOrderStatus(
       String orderId, String newStatus, String userId) async {
     try {
-      // ✅ 1. Update the order status
+      // 1. Update the order status
       await _firestore.collection('orders').doc(orderId).update({
         'status': newStatus,
       });
 
-      // ✅ 2. Create a notification for that user
+      // 2. Create a notification for that user
       await _firestore.collection('notifications').add({
         'userId': userId,
         'title': 'Order Status Updated',
@@ -74,7 +69,7 @@ class _AdminOrderScreenState extends State<AdminOrderScreen> {
           mainAxisSize: MainAxisSize.min,
           children: statuses.map((status) {
             return ListTile(
-              title: Text(status, style: GoogleFonts.lato(color: kUniqueNavyText)), // Use GoogleFonts and Navy Text
+              title: Text(status, style: GoogleFonts.lato(color: kUniqueNavyText)),
               trailing: status == currentStatus
                   ? Icon(Icons.check, color: _screenColor) // Themed check icon
                   : null,
@@ -91,7 +86,7 @@ class _AdminOrderScreenState extends State<AdminOrderScreen> {
     );
   }
 
-  // Pinanatili ang default status colors
+  // default status colors
   Color _getStatusColor(String status) {
     switch (status) {
       case 'Pending':
@@ -113,10 +108,9 @@ class _AdminOrderScreenState extends State<AdminOrderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // Use Light Blue theme
         title:
         Text('Manage All Orders', style: GoogleFonts.lato(color: Colors.white, fontWeight: FontWeight.bold)), // Use GoogleFonts
-        backgroundColor: _screenColor, // Light Blue Primary
+        backgroundColor: _screenColor,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: StreamBuilder<QuerySnapshot>(
@@ -158,7 +152,7 @@ class _AdminOrderScreenState extends State<AdminOrderScreen> {
               return ListTile(
                 onTap: () => _showStatusDialog(orderId, status, userId),
                 leading: CircleAvatar(
-                  backgroundColor: _screenColor, // Light Blue Circle Avatar
+                  backgroundColor: _screenColor,
                   child: Text(
                     '${orderData['items']?.length ?? 0}',
                     style: GoogleFonts.lato(
@@ -167,7 +161,7 @@ class _AdminOrderScreenState extends State<AdminOrderScreen> {
                 ),
                 title: Text(
                   'ID: ${orderId.substring(0, 8)}... | ₱${totalPrice.toStringAsFixed(2)}',
-                  style: GoogleFonts.lato(fontWeight: FontWeight.w700, color: kUniqueNavyText), // Navy Blue Title
+                  style: GoogleFonts.lato(fontWeight: FontWeight.w700, color: kUniqueNavyText),
                 ),
                 subtitle:
                 Text(

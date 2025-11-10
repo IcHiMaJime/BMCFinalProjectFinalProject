@@ -1,5 +1,3 @@
-// lib/widgets/cart_item_card.dart
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:gourmet_snacks_app/providers/cart_provider.dart';
@@ -14,17 +12,15 @@ class CartItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Access CartProvider to delete the item
     final cart = Provider.of<CartProvider>(context, listen: false);
     final double totalPrice = cartItem.price * cartItem.quantity;
     final Color primaryColor = const Color.fromARGB(255, 47, 137, 214);
 
-    // Gumamit ng Dismissible para sa swipe-to-delete functionality
+
     return Dismissible(
-      key: ValueKey(cartItem.id), // Kailangan ng unique key
+      key: ValueKey(cartItem.id),
       direction: DismissDirection.endToStart,
 
-      // Ang background na lalabas kapag nag-swipe
       background: Container(
         color: Colors.red,
         alignment: Alignment.centerRight,
@@ -33,7 +29,6 @@ class CartItemCard extends StatelessWidget {
         child: const Icon(Icons.delete, color: Colors.white, size: 30),
       ),
 
-      // Confirmation dialog bago mag-delete
       confirmDismiss: (direction) {
         return showDialog(
           context: context,
@@ -43,13 +38,13 @@ class CartItemCard extends StatelessWidget {
             actions: <Widget>[
               TextButton(
                 onPressed: () {
-                  Navigator.of(ctx).pop(false); // Huwag i-dismiss
+                  Navigator.of(ctx).pop(false);
                 },
                 child: const Text('No'),
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.of(ctx).pop(true); // I-dismiss
+                  Navigator.of(ctx).pop(true);
                 },
                 child: const Text('Yes'),
               ),
@@ -58,11 +53,8 @@ class CartItemCard extends StatelessWidget {
         );
       },
 
-      // Ang mangyayari kapag nag-dismiss
       onDismissed: (direction) {
-        // Tiyakin na nag-re-remove lang kapag nag-swipe (para maiwasan ang double delete)
         if (direction == DismissDirection.endToStart) {
-          // IKINORREK: Gumamit ng cartItem.id imbes na cartItem.productId
           cart.removeItem(cartItem.id);
         }
 
@@ -99,7 +91,6 @@ class CartItemCard extends StatelessWidget {
               icon: const Icon(Icons.delete_outline),
               color: Colors.red,
               onPressed: () {
-                // IKINORREK: Gumamit ng cartItem.id imbes na cartItem.productId
                 cart.removeItem(cartItem.id);
               },
             ),

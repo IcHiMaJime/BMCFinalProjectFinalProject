@@ -1,12 +1,10 @@
-// lib/widgets/product_card.dart
-
 import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
   final String productName;
   final double price;
   final String imageUrl;
-  final VoidCallback onTap; // Required for tappability/navigation
+  final VoidCallback onTap;
 
   const ProductCard({
     super.key,
@@ -18,21 +16,16 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Gumamit ng InkWell para sa ripple effect at onTap function
     return InkWell(
       onTap: onTap,
       child: Card(
-        // Card properties (elevation, shape, color) are now handled by ThemeData
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // --- IMAGE SECTION ---
-            // Use Expanded with flex=3 for 60% of the card height
             Expanded(
-              flex: 3, //
+              flex: 3,
               child: ClipRRect(
-                // Use a smaller border radius to match the Card's theme
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(12)), // Matches Card radius
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
                 child: Image.network(
                   imageUrl,
                   fit: BoxFit.cover,
@@ -53,8 +46,6 @@ class ProductCard extends StatelessWidget {
               ),
             ),
 
-            // --- INFO SECTION ---
-            // Use Expanded with flex=2 for 40% of the card height
             Expanded(
               flex: 2, //
               child: Padding(
@@ -74,14 +65,13 @@ class ProductCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
 
-                    // Spacer to push the price to the bottom
                     const Spacer(),
 
                     // Price
                     Text(
                       '₱${price.toStringAsFixed(2)}',
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                          color: Theme.of(context).primaryColor, // Use kBrown for the price
+                          color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.bold,
                           fontSize: 15
                       ),

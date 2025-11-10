@@ -1,11 +1,9 @@
-// lib/providers/cart_provider.dart
-
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-// --- CartItem Model --- (No changes)
+// CartItem Model
 class CartItem {
   final String id;
   final String name;
@@ -38,7 +36,7 @@ class CartItem {
   }
 }
 
-// --- CartProvider ---
+// CartProvider
 class CartProvider with ChangeNotifier {
   List<CartItem> _items = [];
   String? _userId;
@@ -77,7 +75,6 @@ class CartProvider with ChangeNotifier {
 
   List<CartItem> get items => [..._items];
 
-  // 1. RENAMED: 'totalAmount' is now 'subtotal' (Price before VAT)
   double get subtotal {
     double total = 0.0;
     for (var item in _items) {
@@ -86,17 +83,16 @@ class CartProvider with ChangeNotifier {
     return total;
   }
 
-  // 2. NEW GETTER: VAT (12% of subtotal)
+  // 2. VAT (12% of subtotal)
   double get vat {
     return subtotal * 0.12;
   }
 
-  // 3. NEW GETTER: Total Price with VAT
+  // 3. Total Price with VAT
   double get totalPriceWithVat {
     return subtotal + vat;
   }
 
-  // The rest of the functions are unchanged from Module 14, except placeOrder:
   void addItem(String id, String name, double price, int quantity) {
     var index = _items.indexWhere((item) => item.id == id);
 
@@ -139,7 +135,7 @@ class CartProvider with ChangeNotifier {
 
       await _firestore.collection('orders').add({
         'userId': _userId,
-        // SAVED NEW BREAKDOWN
+        // Save New
         'subtotal': subtotal,
         'vat': vat,
         'totalPrice': totalPriceWithVat,

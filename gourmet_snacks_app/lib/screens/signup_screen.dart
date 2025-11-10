@@ -1,8 +1,6 @@
-// lib/screens/signup_screen.dart
-
 import 'package:gourmet_snacks_app/screens/login_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart'; // Import para sa RichText
+import 'package:flutter/gestures.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -59,7 +57,7 @@ class  _SignUpScreenState extends State<SignupScreen> {
     );
   }
 
-  // Signup Logic (Kinuha sa huling fix)
+  // Signup Logic
   Future<void> _signup() async {
     if (!_formKey.currentState!.validate()) { return; }
     if (_passwordController.text != _confirmPasswordController.text) {
@@ -131,11 +129,11 @@ class  _SignUpScreenState extends State<SignupScreen> {
     super.dispose();
   }
 
-  // --- FINAL UI MATCH BUILD METHOD (UPDATED) ---
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack( // *GINAMIT ANG STACK PARA SA FULL-SCREEN BACKGROUND*
+      body: Stack(
         children: [
           // 1. Full-Screen Gradient Background
           SizedBox.expand(
@@ -145,8 +143,8 @@ class  _SignUpScreenState extends State<SignupScreen> {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    primaryBlue, // Magsisimula sa primaryBlue
-                    darkerBlue,  // Magtatapos sa darkerBlue
+                    primaryBlue,
+                    darkerBlue,
                   ],
                 ),
               ),
@@ -160,8 +158,6 @@ class  _SignUpScreenState extends State<SignupScreen> {
                 children: [
                   // Logo and Title
                   const SizedBox(height: 50),
-
-                  // Logo (IBINALIK ANG CLIP OVAL)
                   ClipOval(
                     child: Image.asset(
                       'assets/images/appstore.png',

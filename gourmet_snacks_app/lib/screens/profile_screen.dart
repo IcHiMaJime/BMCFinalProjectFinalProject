@@ -1,8 +1,6 @@
-// lib/screens/profile_screen.dart
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:gourmet_snacks_app/main.dart'; // Import for kBlue and kLightBackground
+import 'package:gourmet_snacks_app/main.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -21,9 +19,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool _isLoading = false;
   String? _errorMessage;
 
-  // TANGGALIN ANG LOKAL NA DEFINITION NG PRIMARY COLOR. Gamitin ang Theme.of(context).primaryColor sa build.
-
-  // Helper para sa kasalukuyang user
   User? get _currentUser => _auth.currentUser;
 
   @override
@@ -57,10 +52,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         throw Exception("User not authenticated. Please log in again.");
       }
 
-      // Ito ay nangangailangan ng recent re-authentication kung matagal na
       await _currentUser!.updatePassword(_newPasswordController.text.trim());
 
-      // Show success message (using SnackBar instead of alert)
+      // Show success message
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Password successfully updated!', style: GoogleFonts.lato(color: Colors.white)),
@@ -90,28 +84,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
-  // ✅ FIX: Ang function na mag-sign out (with navigation fix)
   Future<void> _signOut() async {
-    // 1. Kunin ang Navigator *bago* ang async call (para maiwasan ang error)
     final navigator = Navigator.of(context);
 
     // 2. Mag-sign out
     await _auth.signOut();
 
-    // 3. I-pop ang lahat ng screens hanggang sa makarating sa AuthWrapper
-    // Ito ang fix para hindi ma-stuck sa ProfileScreen.
     navigator.popUntil((route) => route.isFirst);
   }
 
 
   @override
   Widget build(BuildContext context) {
-    // Gamitin ang Theme color
     final primaryColor = Theme.of(context).primaryColor;
     final userEmail = _currentUser?.email ?? 'User Not Logged In';
 
     return Scaffold(
-      backgroundColor: kLightBackground, // Soft light blue background
+      backgroundColor: kLightBackground,
       appBar: AppBar(
         title: Text(
           'My Profile',
@@ -128,7 +117,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            // 1. USER INFORMATION CARD
+            // 1. User Information
             Card(
               elevation: 4,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -167,7 +156,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
             const SizedBox(height: 25),
 
-            // 2. CHANGE PASSWORD FORM CARD
+            // 2. Change Password Form
             Card(
               elevation: 4,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -235,7 +224,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                       // Change Password Button
                       ElevatedButton(
-                        // Gagamitin ang global theme para sa button style
                         onPressed: _isLoading ? null : _changePassword,
                         child: _isLoading
                             ? const SizedBox(
@@ -264,7 +252,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               icon: const Icon(Icons.logout),
               label: const Text('LOG OUT'),
               style: ElevatedButton.styleFrom(
-                // Gumamit ng Red para sa warning/logout action
                 backgroundColor: Colors.red.shade700,
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(vertical: 16),

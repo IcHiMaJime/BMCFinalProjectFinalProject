@@ -1,14 +1,8 @@
-// lib/screens/order_history_screen.dart
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart'; // Kailangan ito para sa date formatting
+import 'package:intl/intl.dart';
 
-// ******************************************************
-// TANDAAN: TINANGGAL ANG IMPORT NG ORDER_CARD.DART
-// Ginamit na lang natin ang simpleng Card logic dito mismo.
-// ******************************************************
 
 class OrderHistoryScreen extends StatefulWidget {
   const OrderHistoryScreen({super.key});
@@ -34,7 +28,6 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
         .snapshots();
   }
 
-  // New: Function to show a simple dialog for order details
   void _showOrderDetails(BuildContext context, Map<String, dynamic> orderData, String orderId) {
     final List<dynamic> items = orderData['items'] as List<dynamic>;
 
@@ -102,7 +95,6 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
           final orderDocs = snapshot.data!.docs;
 
           if (orderDocs.isEmpty) {
-            // FIX: Ginamit ang SingleChildScrollView para maalis ang overflow
             return Center(
               child: SingleChildScrollView(
                 child: Padding(
@@ -125,7 +117,6 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
             );
           }
 
-          // Kapag may orders, ipakita ang simpleng listahan
           return ListView.builder(
             itemCount: orderDocs.length,
             itemBuilder: (ctx, index) {
@@ -164,7 +155,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                   ),
 
                   trailing: const Icon(Icons.chevron_right),
-                  isThreeLine: true, // Para mas maganda ang spacing ng subtitle
+                  isThreeLine: true,
                 ),
               );
             },

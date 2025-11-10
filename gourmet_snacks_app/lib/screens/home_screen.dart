@@ -1,11 +1,8 @@
-// lib/screens/home_screen.dart
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import 'package:gourmet_snacks_app/providers/cart_provider.dart';
-
 import 'package:gourmet_snacks_app/widgets/product_card.dart';
 import 'package:gourmet_snacks_app/screens/product_detail_screen.dart';
 import 'package:gourmet_snacks_app/screens/admin/admin_panel_screen.dart';
@@ -14,7 +11,7 @@ import 'package:gourmet_snacks_app/screens/order_history_screen.dart';
 import 'package:gourmet_snacks_app/screens/profile_screen.dart';
 import 'package:gourmet_snacks_app/widgets/notification_icon.dart';
 import 'package:gourmet_snacks_app/screens/chat_screen.dart';
-import 'package:gourmet_snacks_app/main.dart'; // Import for kBlue and kLightBackground
+import 'package:gourmet_snacks_app/main.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -30,7 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  // ✅ STATE PARA SA SEARCH AT FILTER
   String _searchText = '';
   // Default sa 'All', options: 'Snacks', 'Drinks', 'All'
   String _selectedCategory = 'All';
@@ -59,7 +55,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _fetchUserRole() async {
     final currentUser = _auth.currentUser;
-    // ... (rest of _fetchUserRole function remains the same)
     if (currentUser != null) {
       try {
         final doc = await _firestore.collection('users').doc(currentUser.uid).get();
@@ -90,7 +85,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Stream<QuerySnapshot> _fetchProductsStream() {
-    // Kukunin ang lahat ng products stream
     return _firestore.collection('products').snapshots();
   }
 
@@ -103,16 +97,15 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: kLightBackground,
       appBar: AppBar(
-        // ✅ LEFT-ALIGNED TITLE
         title: Text(
           'Gourmet Snacks Marketplace',
           style: GoogleFonts.poppins(
-            fontSize: 15, // NEW: Mas maliit na size
+            fontSize: 15,
             fontWeight: FontWeight.w700,
             color: primaryColor,
           ),
         ),
-        centerTitle: false, // Ensures the title is left-aligned
+        centerTitle: false,
         actions: [
           // 🛒 Cart Icon with Badge
           Consumer<CartProvider>(
@@ -179,7 +172,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
 
-      // 🛍️ Main Content
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -197,7 +189,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
 
-            // ✅ SEARCH AND FILTER SECTION
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
               child: Row(
@@ -249,12 +240,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            // END OF SEARCH AND FILTER SECTION
 
 
-            // 🧁 Product Grid
+            // Product Grid
             StreamBuilder<QuerySnapshot>(
-              stream: _fetchProductsStream(), // Gamitin ang bagong function
+              stream: _fetchProductsStream(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
@@ -265,12 +255,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 // Kukunin ang lahat ng documents
                 final allProductDocs = snapshot.data!.docs;
-
-                // ✅ CLIENT-SIDE FILTERING LOGIC
                 final filteredProductDocs = allProductDocs.where((doc) {
                   final data = doc.data() as Map<String, dynamic>;
                   final name = (data['name'] as String? ?? '').toLowerCase();
-                  // Tiyakin na ang category field ay naglalaman ng 'Snacks' o 'Drinks'
                   final category = (data['category'] as String? ?? 'snacks').toLowerCase();
 
                   // 1. Search Filter (Case-insensitive check)
@@ -282,7 +269,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   return matchesSearch && matchesCategory;
                 }).toList();
-                // END OF CLIENT-SIDE FILTERING LOGIC
 
 
                 if (filteredProductDocs.isEmpty && _searchText.isNotEmpty) {

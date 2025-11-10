@@ -14,7 +14,6 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   final User? _user = FirebaseAuth.instance.currentUser;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  // ✅ Mark ALL as read (manual)
   Future<void> _markAllAsRead() async {
     if (_user == null) return;
 
@@ -77,7 +76,6 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       body: _user == null
           ? const Center(child: Text('Please log in.'))
           : StreamBuilder<QuerySnapshot>(
-        // ✅ FIX: Do not order by 'createdAt' directly — handle nulls safely
         stream: _firestore
             .collection('notifications')
             .where('userId', isEqualTo: _user!.uid)

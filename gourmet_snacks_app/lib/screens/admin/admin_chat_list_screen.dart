@@ -12,20 +12,19 @@ class AdminChatListScreen extends StatelessWidget {
         title: const Text('User Chats'),
       ),
       body: StreamBuilder<QuerySnapshot>(
-        // 1. Query all chats, sorted by last message
         stream: FirebaseFirestore.instance
             .collection('chats')
-            .orderBy('lastMessageAt', descending: true) //
+            .orderBy('lastMessageAt', descending: true)
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator()); //
+            return const Center(child: CircularProgressIndicator());
           }
           if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}')); //
+            return Center(child: Text('Error: ${snapshot.error}'));
           }
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return const Center(child: Text('No active chats.')); //
+            return const Center(child: Text('No active chats.'));
           }
 
           final chatDocs = snapshot.data!.docs;
@@ -34,28 +33,28 @@ class AdminChatListScreen extends StatelessWidget {
             itemBuilder: (context, index) {
               final chatDoc = chatDocs[index];
               final chatData = chatDoc.data() as Map<String, dynamic>;
-              final String userId = chatDoc.id; // The document ID is the user's ID
-              final String userEmail = chatData['userEmail'] ?? 'User ID: $userId'; //
-              final String lastMessage = chatData['lastMessage'] ?? '...'; //
+              final String userId = chatDoc.id;
+              final String userEmail = chatData['userEmail'] ?? 'User ID: $userId';
+              final String lastMessage = chatData['lastMessage'] ?? '...';
 
-              // 2. --- NEW: Get the admin's unread count ---
-              final int unreadCount = chatData['unreadByAdminCount'] ?? 0; //
+              // 2. Get the admin's unread count
+              final int unreadCount = chatData['unreadByAdminCount'] ?? 0;
 
               return ListTile(
                 leading: const Icon(Icons.person),
-                title: Text(userEmail, style: const TextStyle(fontWeight: FontWeight.bold)), //
+                title: Text(userEmail, style: const TextStyle(fontWeight: FontWeight.bold)),
                 subtitle: Text(
                   lastMessage,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                // 3. --- NEW: Show a Badge on the trailing icon ---
+                // 3. Show a Badge on the trailing icon
                 trailing: unreadCount > 0
                     ? Badge( //
                   label: Text('$unreadCount'),
                   child: const Icon(Icons.arrow_forward_ios),
                 )
-                    : const Icon(Icons.arrow_forward_ios), //
+                    : const Icon(Icons.arrow_forward_ios),
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
