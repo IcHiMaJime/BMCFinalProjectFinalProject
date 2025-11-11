@@ -80,7 +80,7 @@ class  _SignUpScreenState extends State<SignupScreen> {
       await _firestore.collection('users').doc(userCredential.user!.uid).set({
         'name': _nameController.text.trim(),
         'email': _emailController.text.trim(),
-        'role': 'user',
+        'role': 'customer',
         'createdAt': Timestamp.now(),
       });
 
