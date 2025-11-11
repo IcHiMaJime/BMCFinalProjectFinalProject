@@ -1,10 +1,8 @@
-// lib/screens/payment_screen.dart
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:gourmet_snacks_app/providers/cart_provider.dart';
 import 'package:gourmet_snacks_app/screens/order_success_screen.dart';
-import 'package:google_fonts/google_fonts.dart'; // Import Google Fonts for consistency
+import 'package:google_fonts/google_fonts.dart';
 
 enum PaymentMethod { card, gcash, bank }
 

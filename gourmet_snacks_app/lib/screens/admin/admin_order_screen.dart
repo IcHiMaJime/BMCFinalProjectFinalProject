@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-import 'package:google_fonts/google_fonts.dart'; // NEW: Import GoogleFonts
+import 'package:google_fonts/google_fonts.dart'; // Import GoogleFonts
 
 class AdminOrderScreen extends StatefulWidget {
   const AdminOrderScreen({super.key});

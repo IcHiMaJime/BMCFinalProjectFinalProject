@@ -4,8 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatefulWidget {
-  final String chatRoomId; //
-  final String? userName; //
+  final String chatRoomId;
+  final String? userName;
 
   const ChatScreen({
     super.key,
